@@ -15,7 +15,7 @@ import persistence.sql.ddl.querybuilder.CreateQueryBuilder;
 
 import java.util.List;
 
-import static persistence.sql.ddl.common.TestSqlConstant.DROP_TABLE_USERS;
+import static persistence.sql.ddl.common.TestSqlConstant.*;
 
 class CustomJpaRepositoryAssociationTest {
 
@@ -48,7 +48,8 @@ class CustomJpaRepositoryAssociationTest {
 
     @AfterEach
     void tearDown() {
-        jdbcTemplate.execute(DROP_TABLE_USERS);
+        jdbcTemplate.execute(DROP_TABLE_ORDER_ITEMS);
+        jdbcTemplate.execute(DROP_TABLE_ORDERS);
     }
 
     @AfterAll

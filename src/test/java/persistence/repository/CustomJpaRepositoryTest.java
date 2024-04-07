@@ -9,12 +9,7 @@ import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import persistence.entity.testfixture.notcolumn.Person;
-import persistence.entity.testfixture.order.Order;
-import persistence.entity.testfixture.order.OrderItem;
 import persistence.sql.ddl.querybuilder.CreateQueryBuilder;
-
-import java.util.List;
-
 import static persistence.sql.ddl.common.TestSqlConstant.DROP_TABLE_USERS;
 
 class CustomJpaRepositoryTest {

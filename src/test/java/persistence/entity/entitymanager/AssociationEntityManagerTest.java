@@ -4,10 +4,7 @@ import database.DatabaseServer;
 import database.H2;
 import jdbc.JdbcTemplate;
 import org.assertj.core.api.Assertions;
-import org.junit.jupiter.api.AfterAll;
-import org.junit.jupiter.api.BeforeAll;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
+import org.junit.jupiter.api.*;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import persistence.entity.manager.EntityManager;
@@ -18,7 +15,7 @@ import persistence.entity.testfixture.order.OrderItem;
 import java.util.List;
 import java.util.Optional;
 
-import static persistence.sql.ddl.common.TestSqlConstant.DROP_TABLE;
+import static persistence.sql.ddl.common.TestSqlConstant.*;
 
 public class AssociationEntityManagerTest {
     private static final Logger logger = LoggerFactory.getLogger(AssociationEntityManagerTest.class);
@@ -40,9 +37,14 @@ public class AssociationEntityManagerTest {
         }
     }
 
+    @AfterEach
+    void tearDown() {
+        jdbcTemplate.execute(DROP_TABLE_ORDER_ITEMS);
+        jdbcTemplate.execute(DROP_TABLE_ORDERS);
+    }
+
     @AfterAll
     static void tearDownOnce() {
-        jdbcTemplate.execute(DROP_TABLE);
         server.stop();
     }
 

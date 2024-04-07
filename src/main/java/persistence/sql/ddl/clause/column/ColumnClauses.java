@@ -15,7 +15,8 @@ public class ColumnClauses {
 
     private static List<ColumnClause> getColumnClauses(List<Field> fields) {
         return fields.stream()
-                .filter(field -> !field.isAnnotationPresent(Transient.class) && !field.isAnnotationPresent(OneToMany.class))
+                .filter(field -> !field.isAnnotationPresent(Transient.class))
+                .filter(field -> !field.isAnnotationPresent(OneToMany.class))
                 .map(ColumnClause::new).collect(Collectors.toList());
     }
 

@@ -95,8 +95,6 @@ public class EntityManagerImpl implements EntityManager {
 
     @Override
     public <T> T merge(T entity) {
-        // TODO oneToMany 관계
-
         EntityEntry entityEntry = persistenceContext.getEntityEntry(entity);
         if (entityEntry.isReadOnly()) {
             throw new ReadOnlyException();

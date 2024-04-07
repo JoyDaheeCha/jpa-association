@@ -39,7 +39,7 @@ public class DtoMapper<T> implements RowMapper<T> {
             InvocationTargetException, NoSuchMethodException, SQLException {
         T dto;
         dto = clazz.getDeclaredConstructor().newInstance();
-        List<Class<? extends Annotation>> invalidAnnotations = List.of(Transient.class, Id.class, OneToMany.class);
+        List<Class<? extends Annotation>> invalidAnnotations = List.of(Transient.class, OneToMany.class);
         List<Field> fields = Arrays.stream(clazz.getDeclaredFields()).filter(x -> invalidAnnotations.stream().noneMatch(x::isAnnotationPresent)).collect(Collectors.toList());
         for (Field field : fields) {
             field.setAccessible(true);

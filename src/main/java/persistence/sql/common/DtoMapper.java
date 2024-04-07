@@ -51,9 +51,9 @@ public class DtoMapper<T> implements RowMapper<T> {
         return dto;
     }
 
-    private static String camelToSnake(String camelCase) {
+    public static String camelToSnake(String camelCase) {
         return CAMEL_PATTERN
                 .matcher(camelCase)
-                .replaceAll(match -> String.format("%s_%s", match.group(1), match.group(2)));
+                .replaceAll(match -> String.format("%s_%s", match.group(1), match.group(2).toLowerCase()));
     }
 }

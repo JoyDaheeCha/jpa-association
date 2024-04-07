@@ -7,7 +7,9 @@ import persistence.sql.ddl.clause.table.TableClause;
 
 import java.lang.reflect.Field;
 import java.lang.reflect.ParameterizedType;
+import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
 import java.util.Optional;
 
 public class JoinClause {
@@ -39,6 +41,33 @@ public class JoinClause {
             return null;
         }
         return (Class<?>) ((ParameterizedType) childEntity.get().getGenericType()).getActualTypeArguments()[0];
+    }
+
+    public static <T> List<T> childEntityClasses(Object entity) {
+        Class<?> clazz = entity.getClass();
+
+        List<Field> fields = Arrays.stream(clazz.getDeclaredFields())
+                .filter(x -> x.isAnnotationPresent(OneToMany.class))
+                .filter(x -> !isFetchTypeLAZY(x))
+                .toList();
+
+        List<T> childEntities = new ArrayList<>();
+
+        for (Field field : fields) {
+            getChildEntities(entity, field, childEntities);
+        }
+
+        return childEntities;
+    }
+
+    private static <T> void getChildEntities(Object entity, Field field, List<T> childEntities) {
+        try {
+            field.setAccessible(true);
+            Object value = field.get(entity);
+            childEntities.addAll((List<T>) value);
+        } catch (IllegalAccessException e) {
+            throw new RuntimeException("OneToMany 관계에서 many 관계의 엔티티 추출에 실패했습니다.");
+        }
     }
 
     public static JoinClause newOne(Class<?> clazz) {

@@ -67,7 +67,9 @@ class CustomJpaRepositoryAssociationTest {
         List<OrderItem> expectedOrderItems = expectedOrder.getOrderItems();
 
         // then
-        Assertions.assertThat(repository.find(Order.class, expectedOrder.getId()).get()).isEqualTo(expectedOrder);
-        Assertions.assertThat(repository.find(OrderItem.class, expectedOrder.getId()).get()).isEqualTo(expectedOrderItems.get(0));
+        SoftAssertions.assertSoftly(softly -> {
+            softly.assertThat(repository.find(Order.class, expectedOrder.getId()).get()).isEqualTo(expectedOrder);
+            softly.assertThat(repository.find(OrderItem.class, expectedOrder.getId()).get()).isEqualTo(expectedOrderItems.get(0));
+        });
     }
 }

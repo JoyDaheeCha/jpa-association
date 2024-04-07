@@ -77,7 +77,14 @@ public class EntityManagerImpl implements EntityManager {
     @Override
     public <T> T persist(T entity) {
         validate(entity);
+
+        if (JoinClause.hasOneToMany(entity.getClass())) {
+            List<Object> childEntities = JoinClause.childEntityClasses(entity);
+            childEntities.forEach(this::persist);
+        }
+
         T insertedEntity = entityPersister.insert(entity);
+
         EntityEntry entityEntry = persistenceContext.getEntityEntry(entity);
         entityEntry.save();
         entityEntry.finishStatusUpdate();

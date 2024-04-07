@@ -18,6 +18,7 @@ import java.util.stream.Collectors;
 
 public class DtoMapper<T> implements RowMapper<T> {
 
+    public static final Pattern CAMEL_PATTERN = Pattern.compile("([a-z])([A-Z])");
     private final Class<T> clazz;
 
     public DtoMapper(Class<T> clazz) {
@@ -51,7 +52,7 @@ public class DtoMapper<T> implements RowMapper<T> {
     }
 
     private static String camelToSnake(String camelCase) {
-        return Pattern.compile("([a-z])([A-Z])")
+        return CAMEL_PATTERN
                 .matcher(camelCase)
                 .replaceAll(match -> String.format("%s_%s", match.group(1), match.group(2)));
     }

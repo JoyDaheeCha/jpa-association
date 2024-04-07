@@ -55,7 +55,7 @@ public class AssociationEntityManagerTest {
 
         Order order = entityManager.find(Order.class, 1L).get();
 
-        List<OrderItem> orderItemsResult = List.of(new OrderItem("불닭볶음면", 10), new OrderItem("마라볶음면", 7));
-        Assertions.assertThat(order).isEqualTo(new Order("ON1000", orderItemsResult));
+        List<OrderItem> orderItemsResult = List.of(new OrderItem(1L, "불닭볶음면", 10), new OrderItem(2L, "마라볶음면", 7));
+        Assertions.assertThat(order).isEqualTo(new Order(1L, "ON1000", orderItemsResult));
     }
 }

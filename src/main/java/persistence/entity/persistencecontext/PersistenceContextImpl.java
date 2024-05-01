@@ -66,7 +66,7 @@ public class PersistenceContextImpl implements PersistenceContext {
         Optional<EntityEntry> entityEntry = this.entityEntries.get(clazz, id);
         if(entityEntry.isEmpty()) {
             EntityKey key = new EntityKey(clazz, id);
-            entityEntries.put(clazz, id);
+            entityEntries.put(key);
             return entityEntries.get(key);
         }
         return entityEntry;

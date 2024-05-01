@@ -1,11 +1,8 @@
 package persistence.entity.manager;
 
-import jakarta.persistence.OneToMany;
-import jakarta.persistence.criteria.Join;
 import jdbc.JdbcTemplate;
 import persistence.PrimaryKey;
 import persistence.entity.exception.EntityExistsException;
-import persistence.entity.exception.NoOneToManyAssociationException;
 import persistence.entity.exception.ReadOnlyException;
 import persistence.entity.loader.EntityLoader;
 import persistence.entity.persistencecontext.EntityEntry;
@@ -15,12 +12,8 @@ import persistence.entity.persister.EntityPersister;
 import persistence.sql.ddl.clause.column.JoinClause;
 
 import java.lang.reflect.Field;
-import java.lang.reflect.ParameterizedType;
-import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 public class EntityManagerImpl implements EntityManager {
     private final PersistenceContext persistenceContext;
@@ -83,10 +76,12 @@ public class EntityManagerImpl implements EntityManager {
             childEntities.forEach(this::persist);
         }
 
-        Object insertedEntity = entityPersister.insert(entity);
-
+        entityPersister.setIdentifier(entity);
         EntityEntry entityEntry = persistenceContext.getEntityEntry(entity);
         entityEntry.save();
+
+        Object insertedEntity = entityPersister.insert(entity);
+
         entityEntry.finishStatusUpdate();
         persistenceContext.updateEntity(insertedEntity, new PrimaryKey(insertedEntity).getPrimaryKeyValue(entity));
     }

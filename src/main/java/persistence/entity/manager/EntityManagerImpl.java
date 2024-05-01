@@ -75,7 +75,7 @@ public class EntityManagerImpl implements EntityManager {
     }
 
     @Override
-    public <T> T persist(T entity) {
+    public void persist(Object entity) {
         validate(entity);
 
         if (JoinClause.hasOneToMany(entity.getClass())) {
@@ -83,12 +83,12 @@ public class EntityManagerImpl implements EntityManager {
             childEntities.forEach(this::persist);
         }
 
-        T insertedEntity = entityPersister.insert(entity);
+        Object insertedEntity = entityPersister.insert(entity);
 
         EntityEntry entityEntry = persistenceContext.getEntityEntry(entity);
         entityEntry.save();
         entityEntry.finishStatusUpdate();
-        return persistenceContext.updateEntity(insertedEntity, new PrimaryKey(insertedEntity).getPrimaryKeyValue(entity));
+        persistenceContext.updateEntity(insertedEntity, new PrimaryKey(insertedEntity).getPrimaryKeyValue(entity));
     }
 
     private void validate(Object entity) {

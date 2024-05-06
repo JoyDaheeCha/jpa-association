@@ -5,7 +5,7 @@ import net.sf.cglib.proxy.MethodProxy;
 
 import java.lang.reflect.Method;
 
-public class BigLetterIntercepter implements MethodInterceptor {
+public class BigLetterInterceptor implements MethodInterceptor {
     @Override
     public Object intercept(Object o, Method method, Object[] objects, MethodProxy methodProxy) throws Throwable {
         Object result = methodProxy.invokeSuper(o, objects);

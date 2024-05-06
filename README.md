@@ -1,9 +1,9 @@
 # jpa-association
 
 # Step2. LazyLoading by Proxy
-- [ ] 미션
+- [x] 미션
   - [x] 요구사항 1 - CGLib Proxy 적용
-  - [ ] 요구사항 2 - 조회 시 프록시 객체를 사용해 적용해보자
+  - [x] 요구사항 2 - 조회 시 프록시 객체를 사용해 적용해보자
 # Step1.OneToMany (FetchType.EAGER)
 - [x] 미션 
   - [x] test fixture 추가

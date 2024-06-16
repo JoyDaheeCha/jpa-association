@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
+import java.util.stream.Collectors;
 
 public class JoinClause {
     public static final String JOIN_QUERY = " inner join %s on %s.%s = %s.%s";
@@ -49,7 +50,7 @@ public class JoinClause {
         List<Field> fields = Arrays.stream(clazz.getDeclaredFields())
                 .filter(x -> x.isAnnotationPresent(OneToMany.class))
                 .filter(x -> !isFetchTypeLAZY(x))
-                .toList();
+                .collect(Collectors.toList());
 
         List<T> childEntities = new ArrayList<>();
 
